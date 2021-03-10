@@ -1,65 +1,66 @@
 <template>
-  <div class="container">
-    <div>
-      <Logo />
-      <h1 class="title">week6-booking</h1>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--grey"
-        >
-          GitHub
-        </a>
+  <div class="relative">
+    <TheHouseSwiper></TheHouseSwiper>
+
+    <div class="w-10/12 absolute center z-50">
+      <div class="flex align-stretch w-full h-full">
+        <div class="w-5/12">
+          <!-- Logo -->
+          <div class="flex items-center justify-center w-full h-1/2">
+            <img src="~assets/images/svg/logo.svg" alt="好室" />
+          </div>
+
+          <!-- Contact -->
+          <div
+            class="flex flex-col justify-end items-center w-full h-1/2 text-xs text-white"
+          >
+            <div>
+              <h1 class="mb-4 font-normal">好室旅店。HOUSE HOTEL</h1>
+
+              <div class="font-thin leading-5">
+                <p>花蓮縣花蓮市國聯一路1號</p>
+                <p>03-8321155</p>
+                <p>HOUSE@HOTEL.COM</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <TheRoomMenu class="w-7/12"></TheRoomMenu>
+      </div>
+
+      <div class="flex justify-center w-5/12 mt-12 bg-black">
+        <TheHouseSwiperPagination></TheHouseSwiperPagination>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import Swiper, { Pagination } from 'swiper'
+
 export default {
-  name: 'Pages'
+  name: 'Pages',
+
+  data: () => ({
+    swiper: null
+  }),
+
+  mounted() {
+    Swiper.use([Pagination])
+
+    this.swiper = new Swiper('.swiper-container', {
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true
+      }
+    })
+  }
 }
 </script>
 
-<style>
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
+<style lang="postcss" scoped>
+.center {
+  @apply top-2/4 left-2/4 transform -translate-x-2/4 -translate-y-2/4;
 }
 </style>
