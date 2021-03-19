@@ -1,10 +1,10 @@
 <template>
-  <div class="swiper-pagination"></div>
+  <div class="swiper-pagination .room-swiper-pagination"></div>
 </template>
 
 <script>
 export default {
-  name: 'TheHouseSwiperPagination'
+  name: 'RoomSwiperPagination'
 }
 </script>
 

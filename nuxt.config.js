@@ -15,19 +15,26 @@ export default {
       {
         rel: 'stylesheet',
         href:
-          'https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;400&display=swap'
+          'https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;400;500&display=swap'
+      },
+      {
+        rel: 'stylesheet',
+        href: 'https://fonts.googleapis.com/css2?family=Open+Sans&display=swap'
       }
     ]
   },
 
-  css: ['swiper/swiper-bundle.min.css'],
+  css: ['swiper/swiper-bundle.min.css', '@fortawesome/fontawesome-svg-core/styles.css'],
 
-  // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [],
+  plugins: [
+    { src: '~/plugins/notifications', mode: 'client' },
+    '~/plugins/fontawesome',
+    '~/plugins/swiper',
+    '~/plugins/currency'
+  ],
 
   components: true,
 
-  // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
     '@nuxtjs/tailwindcss',
     '@nuxtjs/eslint-module',
