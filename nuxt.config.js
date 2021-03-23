@@ -24,13 +24,18 @@ export default {
     ]
   },
 
-  css: ['swiper/swiper-bundle.min.css', '@fortawesome/fontawesome-svg-core/styles.css'],
+  css: [
+    'swiper/swiper-bundle.min.css',
+    '@fortawesome/fontawesome-svg-core/styles.css',
+    '~/assets/css/datepicker.scss'
+  ],
 
   plugins: [
     { src: '~/plugins/notifications', mode: 'client' },
     '~/plugins/fontawesome',
     '~/plugins/swiper',
-    '~/plugins/currency'
+    '~/plugins/currency',
+    '~/plugins/datepicker'
   ],
 
   components: true,
