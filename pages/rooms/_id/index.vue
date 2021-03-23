@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-stretch h-screen text-primary">
+  <div class="flex items-stretch min-h-screen text-primary">
     <!-- 左側 -->
     <div class="w-4/12 h-full fixed top-0 left-0">
       <!-- Swiper 背景輪播 -->
@@ -27,9 +27,9 @@
         <div>
           <div class="text-center mb-3">
             <span class="text-4xl font-opensans">$</span>
-            <span v-currency="room.normalDayPrice" class="text-4xl font-opensans"></span>
+            <span v-currency="total.amount" class="text-4xl font-opensans"></span>
             <span class="text-xl mx-4">/</span>
-            <span class="text-xl">1晚</span>
+            <span class="text-xl">{{ total.nights }}晚</span>
           </div>
 
           <button
@@ -46,7 +46,7 @@
       </div>
     </div>
 
-    <div class="w-8/12 ml-4/12 py-28 pl-14 pr-64 text-primary">
+    <div class="w-8/12 ml-4/12 pt-28 pl-14 pr-64 text-primary">
       <div class="flex items-center mb-12">
         <h1 class="text-4xl font-opensans font-bold">{{ room.name }}</h1>
         <h2 class="text-sm font-medium ml-auto">{{ roomSpec }}</h2>
@@ -77,6 +77,18 @@
 
       <!-- 房間設施 -->
       <room-facilities :facilities="facilities"></room-facilities>
+
+      <!-- 空房狀態查詢 -->
+      <div>
+        <p class="text-sm font-medium mb-2 mt-12">空房狀態查詢 {{ dateRange }}</p>
+
+        <date-picker
+          v-model="dateRange"
+          v-bind="pickerOptions"
+          class="date-picker mb-14"
+          @input="dateChange"
+        ></date-picker>
+      </div>
     </div>
   </div>
 </template>
@@ -85,6 +97,7 @@
 import { apiGetRoomDetails } from '@/api'
 import { getFacilities } from '@/utils/getFacilities'
 import { getRoomSpec } from '@/utils/getRoomSpec'
+import { getAmount } from '@/utils/getAmount'
 
 export default {
   // [取得房間資訊]
@@ -104,7 +117,15 @@ export default {
   data: () => ({
     swiperOptions: {
       pagination: { el: '.swiper-pagination', clickable: true }
-    }
+    },
+
+    pickerOptions: {
+      inline: true,
+      range: true,
+      valueType: 'format'
+    },
+
+    dateRange: []
   }),
 
   computed: {
@@ -119,6 +140,28 @@ export default {
       const result = arr.filter(ele => ele !== '').map(ele => ele.trim())
 
       return result
+    },
+
+    // [根據選擇日期區間計算天數及價格]
+    total() {
+      return this.dateRange.length !== 2
+        ? { nights: 1, amount: this.room.normalDayPrice }
+        : getAmount(this.dateRange, this.room)
+    }
+  },
+
+  methods: {
+    dateChange(val) {
+      // 防止選擇錯誤區間
+      if (val[0] === val[1]) {
+        this.$notify({
+          type: 'error',
+          title: '日期選擇錯誤',
+          text: '請選擇正確的日期區間'
+        })
+
+        this.dateRange = []
+      }
     }
   }
 }
@@ -136,5 +179,13 @@ export default {
 
 .swiper-pagination >>> .swiper-pagination-bullet-active {
   @apply bg-primary;
+}
+
+.date-picker >>> .mx-calendar {
+  width: 50%;
+}
+
+.date-picker >>> .mx-datepicker-main {
+  @apply border-2 border-primary;
 }
 </style>
