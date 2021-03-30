@@ -25,9 +25,10 @@ export default {
   },
 
   css: [
+    '~/assets/css/custom.scss',
+    '~/assets/css/datepicker.scss',
     'swiper/swiper-bundle.min.css',
-    '@fortawesome/fontawesome-svg-core/styles.css',
-    '~/assets/css/datepicker.scss'
+    '@fortawesome/fontawesome-svg-core/styles.css'
   ],
 
   plugins: [

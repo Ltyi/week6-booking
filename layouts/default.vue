@@ -3,6 +3,8 @@
     <Nuxt />
 
     <!-- 全局通知插件 -->
-    <notifications width="400px" position="top center" />
+    <client-only>
+      <notifications width="400px" position="top center" />
+    </client-only>
   </div>
 </template>

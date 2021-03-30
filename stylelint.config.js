@@ -6,6 +6,12 @@ module.exports = {
       {
         ignoreAtRules: ['tailwind']
       }
+    ],
+    'selector-pseudo-element-no-unknown': [
+      true,
+      {
+        ignorePseudoElements: ['v-deep']
+      }
     ]
   }
 }

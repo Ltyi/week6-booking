@@ -1,11 +1,24 @@
 <template>
-  <div class="flex items-stretch min-h-screen text-primary">
+  <div class="relative flex items-stretch min-h-screen text-primary">
+    <!-- Swiper Lightbox -->
+    <client-only>
+      <room-lightbox v-model="lightbox" :images="room.imageUrl"></room-lightbox>
+    </client-only>
+
     <!-- 左側 -->
     <div class="w-4/12 h-full fixed top-0 left-0">
       <!-- Swiper 背景輪播 -->
-      <swiper ref="swipe" :options="swiperOptions" class="h-full">
+      <swiper
+        ref="swipe"
+        class="h-full"
+        :options="swiperOptions"
+        @click-slide="lightbox = true"
+      >
         <swiper-slide v-for="image in room.imageUrl" :key="image">
-          <div :style="`background-image: url(${image})`" class="swiper-slide bg-cover">
+          <div
+            :style="`background-image: url(${image})`"
+            class="swiper-slide bg-cover cursor-pointer"
+          >
             <div class="w-full h-full bg-gradient-room"></div>
           </div>
         </swiper-slide>
@@ -101,8 +114,10 @@ import { getAmount } from '@/utils/getAmount'
 
 export default {
   // [取得房間資訊]
-  async asyncData({ route, error }) {
+  async asyncData({ app, route, error }) {
     try {
+      // app.$nuxt.$loading.start()
+      console.log(app)
       const res = await apiGetRoomDetails(route.params.id)
       const room = res.data.room[0]
       const booking = res.data.booking
@@ -125,7 +140,8 @@ export default {
       valueType: 'format'
     },
 
-    dateRange: []
+    dateRange: [],
+    lightbox: false
   }),
 
   computed: {
@@ -148,6 +164,10 @@ export default {
         ? { nights: 1, amount: this.room.normalDayPrice }
         : getAmount(this.dateRange, this.room)
     }
+  },
+
+  mounted() {
+    console.log('mounted')
   },
 
   methods: {
