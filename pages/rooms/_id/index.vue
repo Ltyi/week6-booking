@@ -47,6 +47,7 @@
 
           <button
             class="w-64 bg-primary text-white text-xl font-opensans py-2 mb-12 cursor-pointer pointer-events-auto focus:outline-none"
+            @click="goBooking"
           >
             Booking now
           </button>
@@ -93,15 +94,27 @@
 
       <!-- 空房狀態查詢 -->
       <div>
-        <p class="text-sm font-medium mb-2 mt-12">空房狀態查詢 {{ dateRange }}</p>
+        <p class="text-sm font-medium mb-2 mt-12">空房狀態查詢</p>
 
         <date-picker
           v-model="dateRange"
           v-bind="pickerOptions"
+          :disabled-date="disabledDate"
           class="date-picker mb-14"
           @input="dateChange"
         ></date-picker>
       </div>
+
+      <!-- 下訂視窗 -->
+      <client-only>
+        <room-booking
+          v-model="bookingModal"
+          :date-range="dateRange"
+          :room="room"
+          :booking="booking"
+          @afterSubmit="afterSubmit"
+        ></room-booking>
+      </client-only>
     </div>
   </div>
 </template>
@@ -116,8 +129,6 @@ export default {
   // [取得房間資訊]
   async asyncData({ app, route, error }) {
     try {
-      // app.$nuxt.$loading.start()
-      console.log(app)
       const res = await apiGetRoomDetails(route.params.id)
       const room = res.data.room[0]
       const booking = res.data.booking
@@ -141,7 +152,8 @@ export default {
     },
 
     dateRange: [],
-    lightbox: false
+    lightbox: false,
+    bookingModal: false
   }),
 
   computed: {
@@ -166,22 +178,42 @@ export default {
     }
   },
 
-  mounted() {
-    console.log('mounted')
-  },
-
   methods: {
     dateChange(val) {
       // 防止選擇錯誤區間
       if (val[0] === val[1]) {
-        this.$notify({
-          type: 'error',
-          title: '日期選擇錯誤',
-          text: '請選擇正確的日期區間'
-        })
-
+        this.showDateError()
         this.dateRange = []
       }
+    },
+
+    disabledDate(date) {
+      const dateFormat = this.$dayjs(date).format('YYYY-MM-DD')
+      const isBooking = this.booking.map(ele => ele.date).some(ele => ele === dateFormat)
+
+      return isBooking
+    },
+
+    goBooking() {
+      if (this.dateRange.length !== 2) {
+        this.showDateError()
+        return
+      }
+
+      this.bookingModal = true
+    },
+
+    showDateError() {
+      this.$notify({
+        type: 'error',
+        title: '日期選擇錯誤',
+        text: '請選擇正確的日期區間擇'
+      })
+    },
+
+    afterSubmit() {
+      this.dateRange = []
+      this.$nuxt.refresh()
     }
   }
 }

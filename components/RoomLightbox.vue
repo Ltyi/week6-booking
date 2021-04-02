@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="value"
-    class="absolute top-0 left-0 w-full h-screen bg-black bg-opacity-50 z-50"
+    class="fixed top-0 left-0 w-full h-screen bg-black bg-opacity-50 z-50"
   >
     <swiper ref="swipe" :options="swiperOptions" class="h-full" @click-slide="close">
       <swiper-slide

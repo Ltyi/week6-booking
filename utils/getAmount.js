@@ -5,8 +5,12 @@ dayjs.extend(duration)
 
 export function getAmount(range, roomInfo) {
   const { normalDayPrice, holidayPrice } = roomInfo
-  const [start, end] = range
 
+  if (dayjs(range[0]).isAfter(range[1])) {
+    range.reverse()
+  }
+
+  const [start, end] = range
   const nights = dayjs(end).diff(dayjs(start), 'day')
   const days = [...Array(nights).keys()].map(num => dayjs(start).add(num, 'day').day())
 
@@ -24,6 +28,7 @@ export function getAmount(range, roomInfo) {
 
   const result = {
     nights,
+    normalDays,
     amount: normalDayPrice * normalDays + (nights - normalDays) * holidayPrice
   }
 

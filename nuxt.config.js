@@ -36,7 +36,8 @@ export default {
     '~/plugins/fontawesome',
     '~/plugins/swiper',
     '~/plugins/currency',
-    '~/plugins/datepicker'
+    '~/plugins/datepicker',
+    '~/plugins/day'
   ],
 
   components: true,
