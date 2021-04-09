@@ -21,7 +21,8 @@ module.exports = {
         secondary: '#949C7C'
       },
       height: {
-        275: '275px'
+        275: '275px',
+        600: '600px'
       },
       margin: {
         '4/12': '33.333333%'

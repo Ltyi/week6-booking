@@ -109,9 +109,7 @@
       <client-only>
         <room-booking
           v-model="bookingModal"
-          :date-range="dateRange"
-          :room="room"
-          :booking="booking"
+          v-bind="bookingProps"
           @afterSubmit="afterSubmit"
         ></room-booking>
       </client-only>
@@ -175,6 +173,17 @@ export default {
       return this.dateRange.length !== 2
         ? { nights: 1, amount: this.room.normalDayPrice }
         : getAmount(this.dateRange, this.room)
+    },
+
+    bookingProps() {
+      return {
+        dateRange: this.dateRange,
+        room: this.room,
+        roomSpec: this.roomSpec,
+        booking: this.booking,
+        facilities: this.facilities,
+        description: this.description
+      }
     }
   },
 

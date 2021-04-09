@@ -24,6 +24,10 @@ export default {
     ]
   },
 
+  loading: {
+    color: '#38470B'
+  },
+
   css: [
     '~/assets/css/custom.scss',
     '~/assets/css/datepicker.scss',
@@ -37,7 +41,8 @@ export default {
     '~/plugins/swiper',
     '~/plugins/currency',
     '~/plugins/datepicker',
-    '~/plugins/day'
+    '~/plugins/day',
+    '~/plugins/spiner'
   ],
 
   components: true,
