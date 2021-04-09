@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-wrap">
+  <div class="flex flex-wrap relative">
     <nuxt-link
       v-for="room in rooms"
       :key="room.id"
@@ -21,6 +21,14 @@
         </div>
       </div>
     </nuxt-link>
+
+    <!-- 讀取 spiner -->
+    <div
+      v-if="$fetchState.pending"
+      class="absolute inset-0 flex items-center justify-center"
+    >
+      <spiner-animation></spiner-animation>
+    </div>
 
     <!-- 錯誤資訊 -->
     <div v-if="$fetchState.error" class="w-full flex justify-center items-center">
