@@ -9,13 +9,13 @@
     >
       <div
         :style="`background-image: url(${room.imageUrl})`"
-        class="w-4/12 h-275 bg-cover bg-center cursor-pointer"
+        class="w-6/12 lg:w-4/12 h-275 bg-cover bg-center cursor-pointer"
         @click="navigate"
       >
         <div
           class="flex justify-center items-center w-full h-full transition-all group hover:bg-primary hover:bg-opacity-60"
         >
-          <span class="text-white text-lg opacity-0 group-hover:opacity-100">
+          <span class="text-white text-lg text-center opacity-0 group-hover:opacity-100">
             {{ room.name }}
           </span>
         </div>

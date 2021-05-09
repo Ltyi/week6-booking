@@ -2,29 +2,31 @@
   <div class="relative">
     <div class="w-full h-screen">
       <!-- Swiper 背景輪播 -->
-      <swiper ref="swipe" :options="swiperOptions" class="h-full">
-        <swiper-slide v-for="image in backgrounds" :key="image">
-          <div :class="image" class="swiper-slide bg-cover">
-            <div class="w-full h-full bg-black bg-opacity-60"></div>
-          </div>
-        </swiper-slide>
-      </swiper>
+      <div class="fixed inset-0">
+        <swiper ref="swipe" :options="swiperOptions" class="h-full">
+          <swiper-slide v-for="image in backgrounds" :key="image">
+            <div :class="image" class="swiper-slide bg-cover">
+              <div class="w-full h-full bg-black bg-opacity-60"></div>
+            </div>
+          </swiper-slide>
+        </swiper>
+      </div>
 
       <!-- Main -->
-      <div class="w-10/12 absolute center z-50">
-        <div class="flex align-stretch w-full h-full">
-          <div class="w-5/12">
+      <div class="w-10/12 absolute center z-50 h-full lg:h-auto">
+        <div class="flex align-stretch flex-wrap w-full min-h-full lg:min-h-0">
+          <div
+            class="flex flex-wrap justify-center items-center w-full h-screen mb-4 py-4 lg:flex-col lg:h-auto lg:w-5/12 lg:mb-0 lg:py-0"
+          >
             <!-- Logo -->
-            <div class="flex items-center justify-center w-full h-1/2">
+            <div class="flex items-center justify-center w-full">
               <img src="~assets/images/svg/logo.svg" alt="好室" />
             </div>
 
             <!-- Contact -->
-            <div
-              class="flex flex-col justify-end items-center w-full h-1/2 text-xs text-white"
-            >
+            <div class="w-full text-center text-xs text-white">
               <div>
-                <h1 class="mb-4 font-normal">好室旅店。HOUSE HOTEL</h1>
+                <h1 class="mb-4 mt-8 font-normal">好室旅店。HOUSE HOTEL</h1>
 
                 <div class="font-thin leading-5">
                   <p>花蓮縣花蓮市國聯一路1號</p>
@@ -33,13 +35,21 @@
                 </div>
               </div>
             </div>
+
+            <div class="w-full text-white text-center self-end lg:hidden" @click="scroll">
+              <fa-icon
+                icon="angle-double-down"
+                size="lg"
+                class="animate__animated animate__bounce animate__infinite"
+              ></fa-icon>
+            </div>
           </div>
 
-          <room-menu class="w-7/12"></room-menu>
+          <room-menu id="scrollTo" class="w-full lg:w-7/12 mb-4 lg:mb-0"></room-menu>
         </div>
 
         <!-- Swiper 分頁導航 -->
-        <div class="flex justify-center w-5/12 mt-12">
+        <div class="justify-center w-5/12 mt-12 hidden lg:flex">
           <div slot="pagination" class="swiper-pagination"></div>
         </div>
       </div>
@@ -56,7 +66,13 @@ export default {
     swiperOptions: {
       pagination: { el: '.swiper-pagination', clickable: true }
     }
-  })
+  }),
+
+  methods: {
+    scroll() {
+      document.querySelector('#scrollTo').scrollIntoView({ behavior: 'smooth' })
+    }
+  }
 }
 </script>
 
