@@ -1,4 +1,10 @@
 export default {
+  target: 'static',
+
+  router: {
+    base: '/week6-booking/'
+  },
+
   head: {
     title: '好室旅店。HOUSE HOTEL',
     htmlAttrs: {

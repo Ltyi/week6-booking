@@ -10,6 +10,7 @@
     "lint:js": "eslint --ext \".js,.vue\" --ignore-path .gitignore .",
     "lint:style": "stylelint \"**/*.{vue,css}\" --ignore-path .gitignore",
     "lint": "npm run lint:js && npm run lint:style",
+    "deploy": "push-dir --dir=dist --branch=gh-pages --cleanup",
     "tailwind-viewer": "tailwind-config-viewer -o -p 8081"
   },
   "dependencies": {
@@ -41,6 +42,7 @@
     "fibers": "^5.0.0",
     "postcss": "^7.0.35",
     "prettier": "^2.2.1",
+    "push-dir": "^0.4.1",
     "sass": "^1.32.8",
     "sass-loader": "^10.1.1",
     "stylelint": "^13.9.0",
