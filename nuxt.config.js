@@ -5,6 +5,10 @@ export default {
     base: '/week6-booking/'
   },
 
+  generate: {
+    fallback: true
+  },
+
   head: {
     title: '好室旅店。HOUSE HOTEL',
     htmlAttrs: {
