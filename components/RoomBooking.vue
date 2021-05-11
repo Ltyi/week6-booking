@@ -27,10 +27,10 @@
           <div
             v-if="value && !success"
             key="order"
-            class="flex flex-grow items-stretch transform max-w-6xl"
+            class="flex flex-grow flex-wrap items-stretch transform max-w-6xl"
           >
             <!-- 預訂表單 -->
-            <div class="flex flex-col w-5/12 bg-primary px-16 pt-12 pb-6">
+            <div class="flex flex-col w-full lg:w-5/12 bg-primary px-16 pt-12 pb-6">
               <div class="fieldBox">
                 <label for="name" class="fieldText">姓名</label>
                 <input id="name" v-model="name" type="text" class="h-9 px-2" />
@@ -94,7 +94,9 @@
             </div>
 
             <!-- 房型資訊 -->
-            <div class="w-7/12 border-primary border-2 bg-white px-8 pt-8 pb-6">
+            <div
+              class="order-first w-full lg:w-7/12 border-primary border-2 bg-white px-8 pt-8 pb-6"
+            >
               <div class="text-right cursor-pointer" @click="close">
                 <fa-icon icon="times" size="lg"></fa-icon>
               </div>
@@ -125,9 +127,12 @@
 
               <div class="font-bold my-5">預約流程</div>
 
-              <div class="flex">
+              <div class="flex flex-wrap">
                 <template v-for="(step, index) in steps">
-                  <div :key="step.icon" class="w-4/12 flex flex-col">
+                  <div
+                    :key="step.icon"
+                    class="w-full flex flex-col mb-4 lg:w-4/12 lg:mb-0"
+                  >
                     <div class="flex items-center justify-center bg-secondary h-12">
                       <img :src="require(`~/assets/images/svg/${step.icon}.svg`)" />
                     </div>
@@ -139,7 +144,11 @@
                     </div>
                   </div>
 
-                  <div v-if="index !== steps.length - 1" :key="index" class="pt-4 px-4">
+                  <div
+                    v-if="index !== steps.length - 1"
+                    :key="index"
+                    class="hidden lg:block pt-4 px-4"
+                  >
                     <img src="~assets/images/icons/right.svg" />
                   </div>
                 </template>
