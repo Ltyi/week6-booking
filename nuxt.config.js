@@ -9,6 +9,8 @@ export default {
     fallback: true
   },
 
+  ssr: true,
+
   head: {
     title: '好室旅店。HOUSE HOTEL',
     htmlAttrs: {
