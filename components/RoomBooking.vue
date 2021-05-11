@@ -27,7 +27,7 @@
           <div
             v-if="value && !success"
             key="order"
-            class="flex flex-grow flex-wrap items-stretch transform max-w-6xl"
+            class="flex flex-grow flex-wrap items-stretch transform max-w-7xl"
           >
             <!-- 預訂表單 -->
             <div class="flex flex-col w-full lg:w-5/12 bg-primary px-16 pt-12 pb-6">
@@ -95,7 +95,7 @@
 
             <!-- 房型資訊 -->
             <div
-              class="order-first w-full lg:w-7/12 border-primary border-2 bg-white px-8 pt-8 pb-6"
+              class="order-first w-full border-primary border-2 bg-white px-8 pt-8 pb-6 lg:w-7/12 lg:order-last"
             >
               <div class="text-right cursor-pointer" @click="close">
                 <fa-icon icon="times" size="lg"></fa-icon>
@@ -127,7 +127,7 @@
 
               <div class="font-bold my-5">預約流程</div>
 
-              <div class="flex flex-wrap">
+              <div class="flex flex-wrap lg:flex-nowrap">
                 <template v-for="(step, index) in steps">
                   <div
                     :key="step.icon"
