@@ -1,18 +1,20 @@
 <template>
-  <div class="relative flex items-stretch min-h-screen text-primary">
+  <div
+    class="relative flex flex-wrap items-stretch min-h-screen text-primary lg:flex-no-wrap"
+  >
     <!-- Swiper Lightbox -->
     <client-only>
       <room-lightbox v-model="lightbox" :images="room.imageUrl"></room-lightbox>
     </client-only>
 
     <!-- 左側 -->
-    <div class="w-4/12 h-full fixed top-0 left-0">
+    <div class="w-full lg:w-4/12 h-full relative lg:fixed top-0 left-0">
       <!-- Swiper 背景輪播 -->
       <swiper
         ref="swipe"
-        class="h-full"
+        class="h-screen"
         :options="swiperOptions"
-        @click-slide="lightbox = true"
+        @click-slide="showPicDetail"
       >
         <swiper-slide v-for="image in room.imageUrl" :key="image">
           <div
@@ -38,7 +40,13 @@
         <div class="flex-grow"></div>
 
         <div>
-          <div class="text-center mb-3">
+          <!-- 行動版房型名稱 -->
+          <div class="text-center text-3xl mb-4 lg:hidden">
+            <p>{{ room.name }}</p>
+            <p class="text-sm mt-4">{{ roomSpec }}</p>
+          </div>
+
+          <div class="text-center mb-12 lg:mb-3">
             <span class="text-4xl font-opensans">$</span>
             <span v-currency="total.amount" class="text-4xl font-opensans"></span>
             <span class="text-xl mx-4">/</span>
@@ -46,7 +54,7 @@
           </div>
 
           <button
-            class="w-64 bg-primary text-white text-xl font-opensans py-2 mb-12 cursor-pointer pointer-events-auto focus:outline-none"
+            class="w-64 bg-primary text-white text-xl font-opensans py-2 mb-12 cursor-pointer pointer-events-auto hidden lg:block focus:outline-none"
             @click="goBooking"
           >
             Booking now
@@ -60,8 +68,11 @@
       </div>
     </div>
 
-    <div class="w-8/12 ml-4/12 pt-28 pl-14 pr-64 text-primary">
-      <div class="flex items-center mb-12">
+    <!-- 右側 -->
+    <div
+      class="w-full ml-0 p-8 text-primary lg:w-8/12 lg:ml-4/12 lg:pt-28 lg:pl-14 lg:pr-64"
+    >
+      <div class="items-center mb-12 hidden lg:flex">
         <h1 class="text-4xl font-opensans font-bold">{{ room.name }}</h1>
         <h2 class="text-sm font-medium ml-auto">{{ roomSpec }}</h2>
       </div>
@@ -96,13 +107,35 @@
       <div>
         <p class="text-sm font-medium mb-2 mt-12">空房狀態查詢</p>
 
-        <date-picker
-          v-model="dateRange"
-          v-bind="pickerOptions"
-          :disabled-date="disabledDate"
-          class="date-picker mb-14"
-          @input="dateChange"
-        ></date-picker>
+        <div class="hidden lg:inline-block">
+          <date-picker
+            v-model="dateRange"
+            v-bind="pickerOptions"
+            :disabled-date="disabledDate"
+            class="date-picker mb-14"
+            @input="dateChange"
+          ></date-picker>
+        </div>
+
+        <div class="lg:hidden">
+          <date-picker
+            v-model="dateRange"
+            v-bind="pickerOptionsMobile"
+            :disabled-date="disabledDate"
+            class="date-picker-mobile mb-14"
+            @input="dateChange"
+          ></date-picker>
+        </div>
+      </div>
+
+      <!-- 行動版下訂按鈕 -->
+      <div class="flex justify-center">
+        <button
+          class="w-64 bg-primary text-white text-xl font-opensans py-2 mb-12 cursor-pointer pointer-events-auto lg:hidden focus:outline-none"
+          @click="goBooking"
+        >
+          Booking now
+        </button>
       </div>
 
       <!-- 下訂視窗 -->
@@ -145,6 +178,11 @@ export default {
 
     pickerOptions: {
       inline: true,
+      range: true,
+      valueType: 'format'
+    },
+
+    pickerOptionsMobile: {
       range: true,
       valueType: 'format'
     },
@@ -220,6 +258,14 @@ export default {
       })
     },
 
+    showPicDetail() {
+      const clientWidth = document.documentElement.clientWidth
+
+      if (clientWidth < 1024) return
+
+      this.lightbox = true
+    },
+
     afterSubmit() {
       this.dateRange = []
       this.$nuxt.refresh()
@@ -248,5 +294,9 @@ export default {
 
 .date-picker >>> .mx-datepicker-main {
   @apply border-2 border-primary;
+}
+
+.date-picker-mobile >>> .mx-input-wrapper {
+  width: 80%;
 }
 </style>

@@ -9,7 +9,7 @@
         :key="image"
         class="flex justify-center items-center cursor-pointer"
       >
-        <img :src="image" class="max-w-4xl" />
+        <img :src="image" class="max-w-xl lg:max-w-2xl" />
       </swiper-slide>
 
       <div slot="button-next" class="swiper-button-next"></div>

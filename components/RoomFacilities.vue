@@ -3,7 +3,7 @@
     <div
       v-for="icon in icons"
       :key="icon.text"
-      class="flex justify-center items-end mr-10 my-4"
+      class="flex justify-center items-end m-4 lg:mr-10 lg:my-4"
       :class="facilities[icon.image] ? '' : hidden ? 'none' : 'opacity-40'"
     >
       <img :src="require(`~/assets/images/icons/${icon.image}.svg`)" :alt="icon.text" />
