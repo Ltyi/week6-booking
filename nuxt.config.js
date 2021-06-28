@@ -2,7 +2,7 @@ export default {
   target: 'static',
 
   router: {
-    base: '/week6-booking/'
+    base: process.env.NODE_ENV === 'production' ? '/week6-booking/' : '/'
   },
 
   generate: {
